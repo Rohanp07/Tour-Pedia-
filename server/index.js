@@ -5,17 +5,19 @@ import morgan from "morgan";
 
 //routers
 import userRouter from "./routes/user.js";
+import tourRouter from "./routes/tour.js";
+
 
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors());
+app.use(cors()); 
 
 
 //routers
 app.use("/users", userRouter); //http://localhost:5000/users/
-
+app.use("/tour", tourRouter);
 
 const MONGODB_URL = "mongodb+srv://pratikvartak:pratikvartak@cluster0.cqaxl.mongodb.net/tour_db?retryWrites=true&w=majority";
 
