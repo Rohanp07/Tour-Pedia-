@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { login } from '../redux/features/authSlice';
 
+import { GoogleLogin } from "react-google-login"
+
 const initialState = {
     email: '',
     password: '',
@@ -50,6 +52,17 @@ const Login = () => {
 
 
     }
+
+    // //google logins
+    // const googleSuccess = (res) => {
+    //     console.log("SD DNAD DAJAFAFGSVB ASFTAGSBAVSAJSJAKDJN GAK KADJAD ")
+    //     console.log(res);
+    // }
+
+    // const googleFailure = (err) => {
+    //     console.log("wedd isdjsn ")
+    //     return toast.error(err.error);
+    // }
 
     return (
         <div style={{ margin: "auto", padding: "15px", maxWidth: "450px", alignContent: "center", marginTop: "120px" }}>
@@ -101,7 +114,36 @@ const Login = () => {
                         </div>
 
                     </MDBValidation>
+
+                    <br />
+
+                    {/* <GoogleLogin
+
+                        clientId='933080963960-8haoakd4c0md6irjr7r52sib6csde030.apps.googleusercontent.com'
+
+                        render={(renderProps) => (
+                            <MDBBtn
+                                style={{ width: "100%" }}
+                                color="danger"
+                                onClick={renderProps.onClick}
+                                disabled={renderProps.disabled}
+
+
+                            >
+                                <MDBIcon className='me-2' fab icon='google' /> Google Sign In
+                            </MDBBtn>
+                        )}
+                        onSuccess={googleSuccess}
+                        onFailure={googleFailure}
+                        cookiePolicy="single_host_origin"
+                    /> */}
+
+
                 </MDBCardBody>
+                <br />
+
+
+
                 <MDBCardFooter>
                     <Link to="/register">
                         <p>Don't have an account ? sign Up</p>
