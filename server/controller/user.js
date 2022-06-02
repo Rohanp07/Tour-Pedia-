@@ -6,7 +6,7 @@ import UserModel from "../models/user.js";
 const secret = "test";
 
 export const signIn = async (req, res) => {
-    console.log("in Login sigbUN ");
+    // console.log("in Login sigbUN ");
     const { email, password } = req.body;
 
     try {
@@ -20,7 +20,7 @@ export const signIn = async (req, res) => {
 
         if (!isPasswordCorrect) return res.status(400).json({ message: "Credentials are incorrect" });
 
-        const token = jwt.sign({ email: userExist.email, password: userExist.password }, secret, { expiresIn: "1h" });
+        const token = jwt.sign({ email: userExist.email, id: userExist._id }, secret, { expiresIn: "1h" });
 
         res.status(200).json({ result: userExist, token });
     } catch (err) {

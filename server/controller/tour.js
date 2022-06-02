@@ -3,6 +3,7 @@ import TourModel from '../models/tour.js';
 
 export const createTour = async (req, res) => {
 
+    console.log("user id is ", req.userId);
     const tour = req.body;
     const newTour = new TourModel({
         ...tour,

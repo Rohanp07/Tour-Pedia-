@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 //auth is used bcoz we need to  know who is the creator of post
-router.post("/",auth, createTour);
+router.post("/", auth, createTour);
 router.post("/", getTours);
 
 

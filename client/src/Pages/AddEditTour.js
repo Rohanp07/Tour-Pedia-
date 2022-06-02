@@ -38,14 +38,14 @@ const AddEditTour = () => {
     const { title, description, tags } = tourData;
     const { id } = useParams();
 
-    useEffect(() => {
-        if (id) {
-            const singleTour = userTours.find((tour) => tour._id === id);
-            console.log(singleTour);
-            setTourData({ ...singleTour });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]);
+    // useEffect(() => {
+    //     if (id) {
+    //         const singleTour = userTours.find((tour) => tour._id === id);
+    //         console.log(singleTour);
+    //         setTourData({ ...singleTour });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [id]);
 
     useEffect(() => {
         error && toast.error(error);
@@ -59,12 +59,10 @@ const AddEditTour = () => {
         if (title && description && tags) {
 
             const updatedTourData = { ...tourData, name: user.result.name };
+            console.log(updatedTourData);
 
-            if (!id) {
-                dispatch(createTour({ updatedTourData, navigate, toast }));
-            } else {
-                // dispatch(updateTour({ id, updatedTourData, toast, navigate }));
-            }
+            dispatch(createTour({ updatedTourData, navigate, toast }));
+
             handleClear();
         }
     };
@@ -123,7 +121,7 @@ const AddEditTour = () => {
                                     value={description}
                                     name="description"
                                     onChange={onInputChange}
-                                    // className="form-control"
+                                    className="form-control"
                                     required
 
 
