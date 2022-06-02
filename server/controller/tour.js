@@ -6,7 +6,8 @@ export const createTour = async (req, res) => {
     const tour = req.body;
     const newTour = new TourModel({
         ...tour,
-        createdAt: new Date().toISOString,
+        creator: req.userId,
+        createdAt: new Date().toISOString(),
 
     });
 
@@ -15,17 +16,18 @@ export const createTour = async (req, res) => {
         res.status(201).json(newTour);
 
     } catch (err) {
+        console.log(err);
         res.status(404).json({ message: "something went wrong while creating tour" });
     }
 }
 
-export const getTours=async (req,res)=>{
+export const getTours = async (req, res) => {
 
-    try{
-        const tours=await TourModel.find();
+    try {
+        const tours = await TourModel.find();
         res.status(200).json(tours);
-    }catch(err){
-        res.status(404).json({message:"something went wrong while getting tours"});
+    } catch (err) {
+        res.status(404).json({ message: "something went wrong while getting tours" });
     }
 
 }
