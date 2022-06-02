@@ -26,6 +26,7 @@ export const getTours = async (req, res) => {
 
     try {
         const tours = await TourModel.find();
+
         res.status(200).json(tours);
     } catch (err) {
         res.status(404).json({ message: "something went wrong while getting tours" });
