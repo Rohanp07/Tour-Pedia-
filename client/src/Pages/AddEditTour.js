@@ -5,13 +5,16 @@ import {
     MDBValidation,
     MDBBtn,
     MDBInput,
-    MDBValidationItem
+    MDBValidationItem,
+    MDBTextArea
 } from "mdb-react-ui-kit";
 import ChipInput from "material-ui-chip-input";
 import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { createTour } from "../redux/features/tourSlice";
+
 
 
 const initialState = {
@@ -54,12 +57,13 @@ const AddEditTour = () => {
             setTagErrMsg("Please provide some tags");
         }
         if (title && description && tags) {
-            const updatedTourData = { ...tourData, name: user?.result?.name };
+
+            const updatedTourData = { ...tourData, name: user.result.name };
 
             if (!id) {
                 dispatch(createTour({ updatedTourData, navigate, toast }));
             } else {
-                dispatch(updateTour({ id, updatedTourData, toast, navigate }));
+                // dispatch(updateTour({ id, updatedTourData, toast, navigate }));
             }
             handleClear();
         }
@@ -97,9 +101,10 @@ const AddEditTour = () => {
                 <MDBCardBody>
                     <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
                         <div className="col-md-12">
-                            <MDBValidationItem feedback="Please provide  title" invalid>
+                            <MDBValidationItem feedback="Please provide title" invalid>
                                 <MDBInput
-                                    placeholder="Enter Title"
+
+                                    label="Enter Title"
                                     type="text"
                                     value={title || ""}
                                     name="title"
@@ -112,16 +117,16 @@ const AddEditTour = () => {
                         </div>
                         <div className="col-md-12">
                             <MDBValidationItem feedback="Please provide description" invalid>
-                                <MDBInput
-                                    placeholder="Enter Description"
+                                <MDBTextArea
+                                    label="Enter Description"
                                     type="text"
                                     value={description}
                                     name="description"
                                     onChange={onInputChange}
-                                    className="form-control"
+                                    // className="form-control"
                                     required
 
-                                    textarea
+
                                     rows={4}
 
                                 />
@@ -143,10 +148,10 @@ const AddEditTour = () => {
                             <FileBase
                                 type="file"
                                 multiple={false}
-                                onDone={({ base64 }) =>  
+                                onDone={({ base64 }) =>
                                     setTourData({ ...tourData, imageFile: base64 })
                                 }
-                            /> 
+                            />
                         </div>
                         <div className="col-12">
                             <MDBBtn style={{ width: "100%" }}>
