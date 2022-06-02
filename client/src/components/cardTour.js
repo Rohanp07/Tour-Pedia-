@@ -24,6 +24,8 @@ const CardTour = ({ _id, title, description, name, creator, tags, imageFile }) =
         return str;
     };
 
+    
+
     return (
         <MDBCardGroup className="mb-5">
             <MDBCard className="h-100 mt-2 d-sm-flex" style={{ maxWidth: "20rem" }}>
