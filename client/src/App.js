@@ -15,6 +15,7 @@ import { setUser } from "./redux/features/authSlice";
 import AddEditTour from "./Pages/AddEditTour";
 import SingleTour from "./Pages/SingleTour";
 import Dashboard from "./Pages/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
 
 
 
@@ -35,10 +36,38 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addTour" element={<AddEditTour />} />
-          <Route path="/editTour/:id" element={<AddEditTour />} />
-          <Route path="/tour/:id" element={<SingleTour />} />
-          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route
+            path="/addTour"
+            element={
+              <PrivateRoute>
+                <AddEditTour />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/editTour/:id"
+            element={
+              <PrivateRoute>
+                <AddEditTour />
+              </PrivateRoute>}
+          />
+          <Route
+            path="/tour/:id"
+            element={
+              <PrivateRoute>
+                <SingleTour />
+              </PrivateRoute>
+
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
 
       </div>

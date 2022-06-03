@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getToursByUser } from "../redux/features/tourSlice"
+import Spinner from "../components/Spinner";
 
 
 
@@ -41,7 +42,7 @@ const Dashboard = () => {
     };
 
     if (loading) {
-        return <h1>Loading ...</h1>;
+        return <Spinner />;
     }
 
     return (
