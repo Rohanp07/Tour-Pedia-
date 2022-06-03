@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getTours } from "../redux/features/tourSlice";
 import CardTour from "../components/cardTour";
+import Spinner from "../components/Spinner";
 
 const Home = () => {
   const { tours, loading } = useSelector((state) => ({ ...state.tour }));
@@ -18,7 +19,7 @@ const Home = () => {
 
 
   if (loading) {
-    return <h1>Lodaing ...</h1>
+    return <Spinner />;
   }
 
   return (
