@@ -21,3 +21,4 @@ export const signUp = (formdata) => API.post("/users/signUp", formdata);
 export const createTour = (tourData) => API.post("/tour", tourData);
 export const getTours = () => API.get("/tour");
 export const getTour = (id) => API.get(`/tour/${id}`);
+export const getToursByUser = (userId) => API.get(`/tour/userTours/${userId}`);
