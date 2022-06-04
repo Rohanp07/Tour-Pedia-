@@ -149,6 +149,21 @@ export const getToursByTag = async (req, res) => {
 
     } catch (err) {
 
+        res.status(404).json({ message: "something went wrong while searching tours by tag" });
+
+    }
+}
+
+
+export const getRelatedTours = async (req, res) => {
+
+    const tags = req.body;
+    try {
+        const tours = await TourModel.find({ tags: { $in: tags } });
+        res.json(tours);
+
+    } catch (err) {
+
         res.status(404).json({ message: "something went wrong while searching tours by tags" });
 
     }

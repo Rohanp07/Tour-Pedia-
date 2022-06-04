@@ -166,6 +166,27 @@ export const getToursByTag = createAsyncThunk(
     }
 )
 
+export const getRelatedTours = createAsyncThunk(
+    "tour/getRelatedTours",
+
+    //we need to provide _ when passing no parameters 
+    async (tags, { rejectWithValue }) => {
+
+        try {
+            const response = await api.getRelatedTours(tags);
+
+            return response.data;
+
+        } catch (err) {
+
+            return rejectWithValue(err.response.data);
+
+        }
+
+    }
+)
+
+
 
 
 
@@ -179,6 +200,8 @@ const tourSlice = createSlice({
         userTours: [],
 
         tagTours: [],
+
+        relatedTours: [],
 
         error: "",
         loading: false
@@ -306,6 +329,17 @@ const tourSlice = createSlice({
             state.tagTours = action.payload;
         },
         [getToursByTag.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message;
+        },
+        [getRelatedTours.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getRelatedTours.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.relatedTours = action.payload;
+        },
+        [getRelatedTours.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message;
         },
