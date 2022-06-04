@@ -81,6 +81,48 @@ export const getToursByUser = createAsyncThunk(
     }
 )
 
+export const deleteTour = createAsyncThunk(
+    "tour/deleteTour",
+
+    //we need to provide _ when passing no parameters 
+    async ({ id, toast }, { rejectWithValue }) => {
+
+
+        try {
+            const response = await api.deleteTour(id);
+            toast.success("Tour Deleted Successfully");
+            return response.data;
+
+        } catch (err) {
+
+            return rejectWithValue(err.response.data);
+
+        }
+
+    }
+)
+
+export const updateTour = createAsyncThunk(
+    "tour/updateTour",
+
+    //we need to provide _ when passing no parameters 
+    async ({ id, updatedTourData, toast, navigate }, { rejectWithValue }) => {
+
+
+        try {
+            const response = await api.updateTour(updatedTourData, id);
+            toast.success("Tour Updated Successfully");
+            navigate("/");
+            return response.data;
+
+        } catch (err) {
+
+            return rejectWithValue(err.response.data);
+
+        }
+
+    }
+)
 
 
 
@@ -149,6 +191,52 @@ const tourSlice = createSlice({
 
         },
         [getToursByUser.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message;
+        },
+
+        [deleteTour.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [deleteTour.fulfilled]: (state, action) => {
+            state.loading = false;
+            //imp step we need to update ui 
+            //arg will contain tour id 
+            console.log("action", action);
+            const { arg: { id } } = action.meta;
+            if (id) {
+                state.userTours = state.userTours.filter(tour => tour._id !== id);
+                state.tours = state.tours.filter(tour => tour._id !== id);
+            }
+
+
+        },
+        [deleteTour.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message;
+        },
+        [updateTour.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [updateTour.fulfilled]: (state, action) => {
+            state.loading = false;
+            //imp step we need to update ui 
+            //arg will contain tour id 
+            console.log("action", action);
+            const { arg: { id } } = action.meta;
+            if (id) {
+                state.userTours = state.userTours.map(tour => tour._id === id ? action.payload : tour);
+                state.tours = state.tours.map(tour => tour._id === id ? action.payload : tour);
+            }
+
+
+
+
+
+
+
+        },
+        [updateTour.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message;
         },

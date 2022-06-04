@@ -14,7 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getToursByUser } from "../redux/features/tourSlice"
+import { deleteTour, getToursByUser } from "../redux/features/tourSlice"
 import Spinner from "../components/Spinner";
 
 
@@ -25,7 +25,6 @@ const Dashboard = () => {
     const userId = (user && user.result) ? user.result._id : null;
     const dispatch = useDispatch();
 
-    console.log("userTours are", userTours);
 
     useEffect(() => {
         if (userId) {
@@ -45,6 +44,14 @@ const Dashboard = () => {
         return <Spinner />;
     }
 
+    const handleDelete = (id) => {
+        if (window.confirm("Are you sure you want to delete this tour?")) {
+            dispatch(deleteTour({ id, toast }));
+        }
+
+    }
+
+
     return (
         <div
             style={{
@@ -56,7 +63,7 @@ const Dashboard = () => {
         >
 
             {userTours.length === 0 && (
-                <h3>No tour available with the user: {(user && user.result) ? user.result._id : null}</h3>
+                <h3>No tour available with the user: {(user && user.result) ? user.result.name : null}</h3>
             )}
 
             {userTours.length > 0 && (
@@ -102,7 +109,7 @@ const Dashboard = () => {
                                                     icon="trash"
                                                     style={{ color: "#dd4b39" }}
                                                     size="lg"
-                                                // onClick={() => handleDelete(item._id)}
+                                                    onClick={() => handleDelete(item._id)}
                                                 />
                                             </MDBBtn>
                                             <Link to={`/editTour/${item._id}`}>
