@@ -16,6 +16,8 @@ import AddEditTour from "./Pages/AddEditTour";
 import SingleTour from "./Pages/SingleTour";
 import Dashboard from "./Pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import NotFound from "./Pages/NotFound";
+import TagTours from "./Pages/TagTours";
 
 
 
@@ -34,6 +36,8 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/tour/search" element={<Home />} />
+          <Route path="/tour/tag/:tag" element={<TagTours />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
@@ -68,6 +72,8 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { MDBCard, MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
+import {  MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getTours } from "../redux/features/tourSlice";

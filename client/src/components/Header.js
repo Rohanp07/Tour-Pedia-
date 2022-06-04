@@ -15,13 +15,30 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 import { setLogout } from "../redux/features/authSlice";
+import { searchTours } from "../redux/features/tourSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 
     const [show, setShow] = useState(false);
     const { user } = useSelector((state) => ({ ...state.auth }));
+    const [search, setSearch] = useState("");
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("search is ", search);
+        if (search) {
+            dispatch(searchTours(search));
+            navigate(`/tour/search?searchQuery=${search}`);
+            setSearch("");
+        } else {
+            navigate("/");
+        }
+    }
 
     const handleLogout = () => {
         dispatch(setLogout());
@@ -86,12 +103,13 @@ const Header = () => {
                             </MDBNavbarItem>
                         )}
                     </MDBNavbarNav>
-                    <form className="d-flex input-group w-auto" >
+                    <form className="d-flex input-group w-auto" onSubmit={handleSubmit} >
                         <input
                             type="text"
                             className="form-control"
                             placeholder="Search Tour"
-
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                         <div style={{ marginTop: "5px", marginLeft: "5px" }}>
                             <MDBIcon fas icon="search" />
