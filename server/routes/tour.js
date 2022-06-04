@@ -2,14 +2,17 @@
 import express from "express";
 import auth from "../middleware/auth.js";
 
-import { createTour, getTours, getTour, getToursByUser, deleteTour, updateTour, getToursBySearch, getToursByTag } from "../controller/tour.js";
+import { createTour, getTours, getTour, getToursByUser, deleteTour, updateTour, getToursBySearch, getToursByTag, getRelatedTours } from "../controller/tour.js";
 
 const router = express.Router();
 
 
 //getting tours by search 
 router.get("/search", getToursBySearch);
-router.get("/tag/:tag",getToursByTag);
+router.get("/tag/:tag", getToursByTag);
+router.post("/relatedTours", getRelatedTours);
+
+
 
 
 //auth is used bcoz we need to  know who is the creator of post

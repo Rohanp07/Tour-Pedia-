@@ -12,7 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
 import moment from "moment";
-import { getTour } from "../redux/features/tourSlice";
+import { getRelatedTours, getTour } from "../redux/features/tourSlice";
+import RelatedTours from "../components/RelatedTours";
 
 
 const SingleTour = () => {
@@ -21,8 +22,18 @@ const SingleTour = () => {
     const navigate = useNavigate();
     const { tour } = useSelector((state) => ({ ...state.tour }));
     const { id } = useParams();
+    const tags = tour.tags;
+    const { relatedTours } = useSelector((state) => ({ ...state.tour }));
 
-    console.log("id in sgtr ", id);
+    console.log("tags are ", tags);
+
+    useEffect(() => {
+
+        tags && dispatch(getRelatedTours(tags));
+
+    }, [tags])
+
+
 
     useEffect(() => {
         if (id) {
@@ -81,6 +92,7 @@ const SingleTour = () => {
                         {tour.description}
                     </MDBCardText>
 
+                    <RelatedTours relatedTours={relatedTours} tourId={id} />
                 </MDBCardBody>
             </MDBCard>
 
