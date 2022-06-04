@@ -13,7 +13,7 @@ import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createTour } from "../redux/features/tourSlice";
+import { createTour, updateTour } from "../redux/features/tourSlice";
 
 
 
@@ -38,14 +38,14 @@ const AddEditTour = () => {
     const { title, description, tags } = tourData;
     const { id } = useParams();
 
-    // useEffect(() => {
-    //     if (id) {
-    //         const singleTour = userTours.find((tour) => tour._id === id);
-    //         console.log(singleTour);
-    //         setTourData({ ...singleTour });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [id]);
+    useEffect(() => {
+        if (id) {
+            const singleTour = userTours.find((tour) => tour._id === id);
+            console.log(singleTour);
+            setTourData({ ...singleTour });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
     useEffect(() => {
         error && toast.error(error);
@@ -61,7 +61,13 @@ const AddEditTour = () => {
             const updatedTourData = { ...tourData, name: user.result.name };
             console.log(updatedTourData);
 
-            dispatch(createTour({ updatedTourData, navigate, toast }));
+            //if id is there means user is updating else creating new
+            if (!id) {
+                dispatch(createTour({ updatedTourData, navigate, toast }));
+            } else {
+                dispatch(updateTour({ id, updatedTourData, navigate, toast }));
+            }
+
 
             handleClear();
         }
