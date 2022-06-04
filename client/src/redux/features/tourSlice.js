@@ -124,6 +124,49 @@ export const updateTour = createAsyncThunk(
     }
 )
 
+export const searchTours = createAsyncThunk(
+    "tour/searchTours",
+
+    //we need to provide _ when passing no parameters 
+    async (searchQuery, { rejectWithValue }) => {
+
+        console.log("in tour slice ", searchQuery);
+        try {
+            const response = await api.getToursBySearch(searchQuery);
+
+            return response.data;
+
+        } catch (err) {
+
+            return rejectWithValue(err.response.data);
+
+        }
+
+    }
+)
+
+
+export const getToursByTag = createAsyncThunk(
+    "tour/getToursByTag",
+
+    //we need to provide _ when passing no parameters 
+    async (tag, { rejectWithValue }) => {
+
+        try {
+            const response = await api.getTagTours(tag);
+
+            return response.data;
+
+        } catch (err) {
+
+            return rejectWithValue(err.response.data);
+
+        }
+
+    }
+)
+
+
 
 
 
@@ -134,6 +177,8 @@ const tourSlice = createSlice({
         tours: [],
         //the tours only of a particular user 
         userTours: [],
+
+        tagTours: [],
 
         error: "",
         loading: false
@@ -237,6 +282,30 @@ const tourSlice = createSlice({
 
         },
         [updateTour.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message;
+        },
+
+
+        [searchTours.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [searchTours.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.tours = action.payload;
+        },
+        [searchTours.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.message;
+        },
+        [getToursByTag.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getToursByTag.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.tagTours = action.payload;
+        },
+        [getToursByTag.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload.message;
         },

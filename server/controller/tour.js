@@ -122,3 +122,34 @@ export const updateTour = async (req, res) => {
 
 
 }
+
+//search functionality 
+export const getToursBySearch = async (req, res) => {
+
+    const { searchQuery } = req.query;
+    console.log("in controller  searchQuery  ", searchQuery);
+    try {
+        const title = new RegExp(searchQuery, 'i');
+        const tours = await TourModel.find({ title });
+
+        res.json(tours);
+
+    } catch (err) {
+
+        res.status(404).json({ message: "something went wrong while searching tours" });
+    }
+}
+
+export const getToursByTag = async (req, res) => {
+
+    const { tag } = req.params;
+    try {
+        const tours = await TourModel.find({ tags: { $in: tag } });
+        res.json(tours);
+
+    } catch (err) {
+
+        res.status(404).json({ message: "something went wrong while searching tours by tags" });
+
+    }
+}

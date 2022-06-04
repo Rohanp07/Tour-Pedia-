@@ -38,7 +38,7 @@ const CardTour = ({ _id, title, description, name, creator, tags, imageFile }) =
                 <div className="top-left">{name}</div>
                 <span className="text-start tag-card" >
                     {tags.map((tag, idx) => (
-                        <Link key={idx} to={`/tours/tag/${tag}`}> #{tag}</Link>
+                        <Link key={idx} to={`/tour/tag/${tag}`}> #{tag}</Link>
                     ))}
                 </span>
 
