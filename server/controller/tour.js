@@ -24,15 +24,30 @@ export const createTour = async (req, res) => {
 }
 
 export const getTours = async (req, res) => {
+    const { page } = req.query;
 
     try {
-        const tours = await TourModel.find();
+        // const tour = await TourModel.findById(id);
 
-        res.status(200).json(tours);
+        // res.status(200).json(tour);
+
+        const limit = 6;
+        const startIdx = (Number(page) - 1) * limit;
+        const total = await TourModel.countDocuments();
+        const tours = await TourModel.find().limit(limit).skip(startIdx);
+
+
+
+        res.json({
+            data: tours,
+            currentPage: Number(page),
+            totalTours: total,
+            numberOfPages: Math.ceil(total / limit)
+        })
+
     } catch (err) {
         res.status(404).json({ message: "something went wrong while getting tours" });
     }
-
 }
 
 export const getTour = async (req, res) => {
