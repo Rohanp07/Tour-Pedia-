@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import * as api from "../api";
 
 //creating action
@@ -58,6 +57,7 @@ const authSlice = createSlice({
             state.loading = false;
             localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
             state.user = action.payload;
+
 
         },
         [login.rejected]: (state, action) => {

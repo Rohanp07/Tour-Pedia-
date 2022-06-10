@@ -4,8 +4,8 @@ const userSchema = mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     //we have kept password as false coz we are using both normal as well as 
-    ///google login but we dont implement google login
-    password: { type: String, required: true },
+    ///google login
+    password: { type: String, required: false },
     googleId: { type: String, required: false },
     id: { type: String },
 });
