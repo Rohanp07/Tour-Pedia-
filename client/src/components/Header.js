@@ -32,6 +32,7 @@ const Header = () => {
 
 
     if (token) {
+        console.log("checking for github ");
         const decodedToken = decode(token);
 
         if (decodedToken.exp * 1000 < new Date().getTime()) {
