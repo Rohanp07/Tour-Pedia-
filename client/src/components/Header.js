@@ -18,15 +18,27 @@ import { setLogout } from "../redux/features/authSlice";
 import { searchTours } from "../redux/features/tourSlice";
 import { useNavigate } from "react-router-dom";
 
+import decode from "jwt-decode";
 const Header = () => {
 
     const [show, setShow] = useState(false);
     const { user } = useSelector((state) => ({ ...state.auth }));
     const [search, setSearch] = useState("");
 
+    const token = user && user.token;
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
+
+
+    if (token) {
+        console.log("checking for github ");
+        const decodedToken = decode(token);
+
+        if (decodedToken.exp * 1000 < new Date().getTime()) {
+            dispatch(setLogout());
+        }
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
