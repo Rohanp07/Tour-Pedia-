@@ -24,10 +24,10 @@ export const getTours = createAsyncThunk(
     "tour/getTours",
 
     //we need to provide _ when passing no parameters 
-    async (page, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
 
         try {
-            const response = await api.getTours(page);
+            const response = await api.getTours();
 
             return response.data;
 
@@ -202,17 +202,9 @@ const tourSlice = createSlice({
         tagTours: [],
 
         relatedTours: [],
-        currentPage: 1,
-        numberOfPages: null,
 
         error: "",
         loading: false
-    },
-    reducers: {
-        setCurrentPage: (state, action) => {
-            state.currentPage = action.payload;
-        }
-
     },
 
     extraReducers: {
@@ -236,10 +228,7 @@ const tourSlice = createSlice({
         },
         [getTours.fulfilled]: (state, action) => {
             state.loading = false;
-            state.tours = action.payload.data;
-            state.numberOfPages = action.payload.numberOfPages;
-            state.currentPage = action.payload.currentPage;
-
+            state.tours = action.payload;
 
 
         },
@@ -361,7 +350,5 @@ const tourSlice = createSlice({
 });
 
 
-
-export const { setCurrentPage } = tourSlice.actions;
 
 export default tourSlice.reducer;
